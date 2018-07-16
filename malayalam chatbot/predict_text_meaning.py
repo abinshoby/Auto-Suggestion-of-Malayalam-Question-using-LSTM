@@ -21,11 +21,11 @@ def clean_str(string):
     return string.strip().lower()
 
 def predict(text):
-    yaml_file = open('/home/abin/PycharmProjects/ICFOSS/query_model1.yaml', 'r')
+    yaml_file = open('/home/abin/PycharmProjects/ICFOSS/query_model_test.yaml', 'r')
     loaded_model_yaml = yaml_file.read()
     yaml_file.close()
     model = model_from_yaml(loaded_model_yaml)
-    MAX_SEQUENCE_LENGTH = 1000
+    MAX_SEQUENCE_LENGTH = 100
     MAX_NB_WORDS = 20000  # 20000
     EMBEDDING_DIM = 300
     VALIDATION_SPLIT = 0.2
@@ -45,7 +45,7 @@ def predict(text):
     ind=res_list.index(max(res_list))
     print(ind)
     #print("{} positive, {} negeative.".format(result[0,1], result[0,0]))
-    data_train = pd.read_csv('/home/abin/PycharmProjects/ICFOSS/data/querydata.tsv', sep='\t')
+    data_train = pd.read_csv('/home/abin/PycharmProjects/ICFOSS/data/querydata_to_be_suggested.tsv', sep='\t')
     return (data_train.loc[data_train['sentiment'] == ind]['review']).values.tolist()
 
 #l=predict("ഹോട്ടലുകളുടെ പട്ടിക ")
