@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#BY Hari and Abin
 from tkinter import *
 import re
 import sqlite3
@@ -69,7 +68,7 @@ class AutocompleteEntry(Entry):
                 self.lb.delete(0, END)
 
                 for w in words:
-                    self.lb.insert(END, w.encode('utf-8').decode('utf-8'))
+                    self.lb.insert(END, w)
             else:
                 if self.lb_up:
                     self.lb.destroy()
@@ -114,7 +113,7 @@ class AutocompleteEntry(Entry):
         #1return [w for w in self.lista if re.match(pattern, w)]
         #patt1=re.compile(self.var.get()+'.*') #correct1
         #return [w for w in self.lista if re.match(patt1,w)] #correct1
-        out=predict(self.var.get())
+        out=predict(self.var.get().strip())
         return out
 
 
@@ -131,11 +130,12 @@ if __name__ == '__main__':
         print("db error")
     root = Tk()
     root.minsize(1000,500)
-    entry = AutocompleteEntry(lista, root, font=('MLU-Panini', 15))
-    entry.config(width=50)
+    entry = AutocompleteEntry(lista, root, font=('Lohit Malayalam ', 15))
     entry.grid(row=0, column=0)
-    Button(text='nothing',height=4,width=100).grid(row=1, column=0)
-    Button(text='nothing',height=4,width=100).grid(row=2, column=0)
-    Button(text='nothing',height=4,width=100).grid(row=3, column=0)
+    entry.config(width=50)
+    entry.pack()
+    #Button(text='nothing',height=4,width=100).grid(row=1, column=0)
+    #Button(text='nothing',height=4,width=100).grid(row=2, column=0)
+    #Button(text='nothing',height=4,width=100).grid(row=3, column=0)
 
     root.mainloop()
