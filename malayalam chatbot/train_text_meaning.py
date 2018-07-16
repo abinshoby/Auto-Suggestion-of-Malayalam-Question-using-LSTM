@@ -36,7 +36,7 @@ def clean_str(string):
     return string.strip().lower()
 
 def train():
-    MAX_SEQUENCE_LENGTH = 1000
+    MAX_SEQUENCE_LENGTH = 100
     MAX_NB_WORDS = 20000#20000
     EMBEDDING_DIM = 300
     VALIDATION_SPLIT = 0.2
@@ -102,7 +102,7 @@ def train():
     for line in f:
         values = line.split()
         word = values[0]
-        print(word)
+        #print(word)
         coefs = np.asarray(values[1:], dtype='float32')
         embeddings_index[word] = coefs
     f.close()  # stores the word and corresponding vector values in a dictionary
@@ -124,10 +124,14 @@ def train():
                                 trainable=True)
 
     sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')  # first layer
-    embedded_sequences = embedding_layer(
-        sequence_input)  # consider this layer as combination of first layer and embedded layer
-    l_lstm = Bidirectional(LSTM(100))(embedded_sequences)  # typecast embedded sequence to bi-lstm
-    preds = Dense(nout, activation='softmax')(l_lstm)  # nout  output units
+    embedded_sequences = embedding_layer(sequence_input)  # consider this layer as combination of first layer and embedded layer
+    # embedded_sequences2=embedding_layer(embedded_sequences)
+    l_lstm = Bidirectional(LSTM(100,return_sequences=True))(embedded_sequences)  # typecast embedded sequence to bi-lstm
+       #added
+
+    l_lstm2=Bidirectional(LSTM(100))(l_lstm)
+    preds = Dense(nout, activation='softmax')(l_lstm2)  # nout  output units
+
     model = Model(sequence_input, preds)
     model.compile(loss='categorical_crossentropy',
                   optimizer='rmsprop',
@@ -137,9 +141,9 @@ def train():
     model.summary()
     print(x_train, y_train)
     model.fit(x_train, y_train, validation_data=(x_val, y_val),
-              nb_epoch=10, batch_size=50)
+              nb_epoch=20, batch_size=50)
     #predict(data_train.review[1], model)
     model_yaml = model.to_yaml()
-    with open("query_model1.yaml", "w") as yaml_file:
+    with open("query_model_test.yaml", "w") as yaml_file:
         yaml_file.write(model_yaml)
 train()
