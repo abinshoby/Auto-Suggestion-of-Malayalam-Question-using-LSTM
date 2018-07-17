@@ -48,7 +48,7 @@ def train():
     labels = []
     #
     print(data_train.review.shape)
-    print(data_train)
+    #print(data_train)
     for idx in range(data_train.review.shape[0]):
         text = BeautifulSoup(data_train.review[idx])
         texts.append(clean_str(text.get_text()))  # texts contains list of reviews
@@ -62,7 +62,7 @@ def train():
     # print(sequences)                                      # sequences is a list of numbers corresponding to each word in the sentence and for every sentence
     #
     word_index = tokenizer.word_index
-    # print(word_index)                                       #word_index contains dictionary of words and their corresponding index
+    #print(word_index)                                       #word_index contains dictionary of words and their corresponding index
     print('Found %s unique tokens.' % len(word_index))
 
     data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
@@ -88,7 +88,7 @@ def train():
     # print(len(x_val[0]))
     y_val = labels[-nb_validation_samples:]
 
-    print('Training and validation set number of positive and negative reviews')
+    print('Training and validation')
     print
     y_train.sum(axis=0)  # no of +ve and -ve reviews
 
@@ -116,7 +116,7 @@ def train():
         if embedding_vector is not None:
             # words not found in embedding index will be all-zeros.
             embedding_matrix[i] = embedding_vector
-    # print(embedding_matrix)                                    # stores the vector values of words in the reviews
+    print(" length of embedding matrix:",len(embedding_matrix))                                    # stores the vector values of words in the reviews
     embedding_layer = Embedding(len(word_index) + 1,
                                 EMBEDDING_DIM,
                                 weights=[embedding_matrix],
@@ -129,19 +129,21 @@ def train():
     l_lstm = Bidirectional(LSTM(100,return_sequences=True))(embedded_sequences)  # typecast embedded sequence to bi-lstm
        #added
 
+
     l_lstm2=Bidirectional(LSTM(100))(l_lstm)
+    # l_lstm3=Bidirectional(LSTM(100))(l_lstm2)
     preds = Dense(nout, activation='softmax')(l_lstm2)  # nout  output units
 
-    model = Model(sequence_input, preds)
-    model.compile(loss='categorical_crossentropy',
-                  optimizer='rmsprop',
+    model = Model(sequence_input, preds)#categorical_crossentropy,rmsprop
+    model.compile(loss='cosine_proximity',
+                  optimizer='Nadam',
                   metrics=['acc'])
     #
     print("model fitting - Bidirectional LSTM")
     model.summary()
     print(x_train, y_train)
     model.fit(x_train, y_train, validation_data=(x_val, y_val),
-              nb_epoch=20, batch_size=50)
+              nb_epoch=8, batch_size=3)
     #predict(data_train.review[1], model)
     model_yaml = model.to_yaml()
     with open("query_model_test.yaml", "w") as yaml_file:
