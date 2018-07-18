@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auto Suggestion</title>
+</head>
+<body>
+
+<script type="text/javascript">
+    function onch(v){
+    var sug = new Array();
+    var select = document.getElementById("do you mean");
+   sug='{{ pred('v') }}'
+
+    var org='';
+    for(var i = 6; i < (sug.length-6); i++)
+        org+=sug[i];
+  var options = '';
+    console.log(org);
+    options += '<option value="'+org+'"  id="drop"/> <option value="'+v+'" id="drop2"/>';
+
+  document.getElementById('do you mean').innerHTML = options;
+
+
+
+    };
+</script>
+
+<h1>Auto suggestion</h1>
+
+<input list="do you mean" onChange="onch(this.value); " id="do" autocomplete="off">
+<datalist id="do you mean">
+<option id="drop"></option>
+
+
+
+</datalist>
+
+  <label name="here"></label>
+
+<button name="forwardBtn" onclick="move_forward()">Forward</button>
+    </form>
+</body>
+</html>

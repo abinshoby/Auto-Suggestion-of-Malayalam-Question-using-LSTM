@@ -97,7 +97,7 @@ def train():
 
     GLOVE_DIR = "/home/abin/PycharmProjects/ICFOSS/glove/"
     embeddings_index = {}
-    f = open(os.path.join(GLOVE_DIR, 'wiki.ml.vec'))
+    f = open(os.path.join(GLOVE_DIR, 'wiki.ml.vec'))#wiki.ml.vec
 
     for line in f:
         values = line.split()
@@ -132,7 +132,7 @@ def train():
 
     l_lstm2=Bidirectional(LSTM(100))(l_lstm)
     # l_lstm3=Bidirectional(LSTM(100))(l_lstm2)
-    preds = Dense(nout, activation='softmax')(l_lstm2)  # nout  output units
+    preds = Dense(nout, activation='sigmoid')(l_lstm2)  # nout  output units
 
     model = Model(sequence_input, preds)#categorical_crossentropy,rmsprop
     model.compile(loss='cosine_proximity',

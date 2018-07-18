@@ -9,6 +9,15 @@ import numpy as np
 import pandas as pd
 import _pickle as cPickle
 from collections import defaultdict
+from keras.utils import plot_model
+
+from keras.utils.vis_utils import model_to_dot
+
+from keras.utils.vis_utils import plot_model
+
+
+
+
 import re
 def clean_str(string):
     """
@@ -36,6 +45,9 @@ def predict(text):
     tokenizer = Tokenizer(nb_words=20000)
     tokenizer.fit_on_texts(texts)
     sequences = tokenizer.texts_to_sequences(texts)
+    #plot_model(model, to_file='model.png')
+    #SVG(model_to_dot(model).create(prog='dot', format='svg'))
+    #plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
     word_index = tokenizer.word_index
     data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
@@ -46,7 +58,7 @@ def predict(text):
     print(ind)
     #print("{} positive, {} negeative.".format(result[0,1], result[0,0]))
     data_train = pd.read_csv('/home/abin/PycharmProjects/ICFOSS/data/querydata_to_be_suggested.tsv', sep='\t')
-    return (data_train.loc[data_train['sentiment'] == ind]['review']).values.tolist()
+    return str((data_train.loc[data_train['sentiment'] == ind]['review']).values.tolist()[0])
 
 #l=predict("ബോട്ടിംഗ്")
 #print(l)
