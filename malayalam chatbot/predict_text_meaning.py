@@ -21,7 +21,8 @@ def clean_str(string):
     return string.strip().lower()
 
 def predict(text):
-    yaml_file = open('/home/abin/PycharmProjects/ICFOSS/query_model_test.yaml', 'r')
+    print('text',text)
+    yaml_file = open('/home/abin/chat_bot_with_flask/query_model_test.yaml', 'r')
     loaded_model_yaml = yaml_file.read()
     yaml_file.close()
     model = model_from_yaml(loaded_model_yaml)
@@ -46,7 +47,8 @@ def predict(text):
     print(ind)
     #print("{} positive, {} negeative.".format(result[0,1], result[0,0]))
     data_train = pd.read_csv('/home/abin/PycharmProjects/ICFOSS/data/querydata_to_be_suggested.tsv', sep='\t')
-    return (data_train.loc[data_train['sentiment'] == ind]['review']).values.tolist()
+    yaml_file.close()
+    return str((data_train.loc[data_train['sentiment'] == ind]['review']).values.tolist()[0])
 
 #l=predict("ബോട്ടിംഗ്")
 #print(l)

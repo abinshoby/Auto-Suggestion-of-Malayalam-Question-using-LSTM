@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta name="description" content="">
+     <meta name="author" content="">
+     <link rel="icon" href="../../favicon.ico">
+
+     <title>Auto Suggestion </title>
+
+     <!-- Bootstrap core CSS -->
+     <!--<link href="static/css/bootstrap.min.css" rel="stylesheet">-->
+
+     <!--&lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+     <!--<link href="static/css/signin.css" rel="stylesheet">-->
+
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+ </head>
+
+ <body>
+ <script>
+     $(function() {
+    $('#inp').on('change  paste',function() {
+        $.ajax({
+            url: '/req',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+            var out=$.parseJSON(response);
+                console.log(out.suggestion);
+                document.getElementById('out').innerHTML = 'suggested:'+out.suggestion;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+
+ </script>
+
+     <div class="container" align="center">
+
+         <form  action="/" method="post" role="form">
+             <h2 style="color:#659ba0;">Auto Suggestion </h2>
+             <input id="inp" name="inp" align="center"style="width:500px ;height:30px;" class="form-control" autocomplete="off" placeholder="Your Question here" required autofocus>
+
+<div  id="out" align="center" style="background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;"></div>
+
+
+         </form>
+
+     </div>
+
+ </body>
+
+ </html>

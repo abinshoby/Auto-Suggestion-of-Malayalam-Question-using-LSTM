@@ -2,33 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <title>Auto Suggestion</title>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
 </head>
 <body>
 
+
 <script type="text/javascript">
-    function onch(v){
-    var sug = new Array();
-    var select = document.getElementById("do you mean");
-   sug='{{ pred('v') }}'
+$(document).ready(function(){
+    $("#do").on('change  paste', function(){
+    $.ajax({
+            url: '/signUpUser',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
 
-    var org='';
-    for(var i = 6; i < (sug.length-6); i++)
-        org+=sug[i];
-  var options = '';
-    console.log(org);
-    options += '<option value="'+org+'"  id="drop"/> <option value="'+v+'" id="drop2"/>';
 
-  document.getElementById('do you mean').innerHTML = options;
+
+     });
+    });
 
 
 
-    };
+
+
 </script>
+
+
 
 <h1>Auto suggestion</h1>
 
-<input list="do you mean" onChange="onch(this.value); " id="do" autocomplete="off">
+<input list="do you mean"  name="inp" id="do" autocomplete="off">
 <datalist id="do you mean">
 <option id="drop"></option>
 
@@ -38,7 +53,12 @@
 
   <label name="here"></label>
 
-<button name="forwardBtn" onclick="move_forward()">Forward</button>
+<button id="forwardBtn" >Forward</button>
     </form>
+<!--<div id="out" class="ot" style="background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;-->
+    <!--border-radius: 7px;">output</div>-->
+<div id="outbox"></div>
+<div  id="out" style="background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;">suggested:</div>;
+
 </body>
 </html>
