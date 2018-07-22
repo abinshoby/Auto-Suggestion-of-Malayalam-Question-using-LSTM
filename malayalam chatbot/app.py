@@ -1,7 +1,8 @@
 from flask import Flask
 from flask import render_template
-from predict_text_meaning import *
+import predict_text_meaning
 from flask import *
+import imp
 app = Flask(__name__)
 o=""
 #@app.route('/')
@@ -18,7 +19,12 @@ def first():
 @app.route('/req', methods=['POST'])
 def req():
     inp =  request.form['inp'];
+    if(len(inp)>0):
+        out= json.dumps({'status':'OK','suggestion':predict_text_meaning .predict([inp])});#json.dumps({'status':'OK','user':user,'pass':password});
 
-    return json.dumps({'status':'OK','suggestion':predict(inp)});#json.dumps({'status':'OK','user':user,'pass':password});
+        imp.reload(predict_text_meaning)
+        return  out
+    else:
+        return json.dumps({'status':'OK','suggestion':''});
 if __name__ == '__main__':
     app.run(debug=True)
