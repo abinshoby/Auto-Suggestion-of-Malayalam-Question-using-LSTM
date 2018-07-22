@@ -20,7 +20,7 @@ def load_map():
     return word_map
 def predict(text):
 
-    if(len(text)>0):
+    if(len(text[0])>0):
         print(text)
         json_file = open('model.json', 'r')
         loaded_model_json = json_file.read()

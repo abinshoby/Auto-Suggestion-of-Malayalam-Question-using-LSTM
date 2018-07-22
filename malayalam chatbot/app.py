@@ -21,7 +21,7 @@ def first():
 def req():
     inp =  request.form['inp'];
     if(len(inp)>0):
-        out= json.dumps({'status':'OK','suggestion':predict([inp])});#json.dumps({'status':'OK','user':user,'pass':password});
+        out= json.dumps({'status':'OK','suggestion':predict([inp.strip()])});#json.dumps({'status':'OK','user':user,'pass':password});
 
 
         return  out
