@@ -162,9 +162,9 @@ def train():
     # summarize the model
     print(model.summary())
     # fit the model
-    model.fit(padded_docs, labels, epochs=50, verbose=0)
+    model.fit(padded_docs, labels, epochs=50, verbose=1)
     # evaluate the model
-    loss, accuracy = model.evaluate(padded_docs, labels, verbose=0)
+    loss, accuracy = model.evaluate(padded_docs, labels, verbose=1)
     print('Accuracy: %f' % (accuracy * 100))
 
     model_json = model.to_json()
