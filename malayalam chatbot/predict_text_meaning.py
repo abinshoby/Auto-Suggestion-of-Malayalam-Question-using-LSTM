@@ -2,7 +2,6 @@
 #By abin and hari
 
 from keras.preprocessing.text import Tokenizer
-import keras
 from keras.preprocessing.sequence import pad_sequences
 import pandas as pd
 import os
@@ -71,7 +70,7 @@ def predict(text):
 
 
         # keras.backend.get_session().close()
-        return (data_train.loc[data_train['sentiment'] == out[0]]['review']).values.tolist()[0]
+        return (data_train.loc[data_train['sentiment'] == out[0]]['question']).values.tolist()[0]
     else:
 
         return ""
