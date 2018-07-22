@@ -93,7 +93,7 @@ def train():
     # define documents
     docs=[]
     labels=[]
-    data_train = pd.read_csv('/home/abin/PycharmProjects/ICFOSS/data/querydata.tsv', sep='\t')
+    data_train = pd.read_csv('data/querydata.tsv', sep='\t')
     for idx in range(data_train.review.shape[0]):
         text = BeautifulSoup(data_train.review[idx])
         docs.append(clean_str(text.get_text()))  # texts contains list of reviews
@@ -128,12 +128,12 @@ def train():
     print(encoded_docs)
     save(encoded_docs,docs)
     # pad documents to a max length of 4 words
-    max_length = 10
+    max_length = 50
     padded_docs = pad_sequences(encoded_docs, maxlen=max_length, padding='post')
     print(padded_docs)
     # load the whole embedding into memory
     embeddings_index = dict()
-    f = open('/home/abin/PycharmProjects/ICFOSS/glove/wiki.ml.vec')
+    f = open('glove/wiki.ml.vec')
     for line in f:
         values = line.split()
         word = values[0]
@@ -149,13 +149,13 @@ def train():
             embedding_matrix[i] = embedding_vector
     # define model
     model = Sequential()
-    e = Embedding(vocab_size, 300, weights=[embedding_matrix], input_length=10, trainable=False)
+    e = Embedding(vocab_size, 300, weights=[embedding_matrix], input_length=max_length, trainable=False)
              #no of distinct words,output dim,weight,max no of words in a sentence
     model.add(e)
     #model.add(Flatten())
     model.add(Bidirectional(LSTM(100,return_sequences=True)))
     model.add(Bidirectional(LSTM(100)))
-    # model.add(Flatten())
+
     model.add(Dense(len(labels[0]), activation='sigmoid'))
     # compile the model
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['acc'])
@@ -173,6 +173,8 @@ def train():
     # serialize weights to HDF5
     model.save_weights("model.h5",overwrite=True)
     print("Saved model to disk")
+    from keras.utils import plot_model
+    plot_model(model, to_file='model.png')
     print(padded_docs)
     pred=model.predict(padded_docs)
     print(pred)

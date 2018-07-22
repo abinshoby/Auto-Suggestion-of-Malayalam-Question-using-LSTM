@@ -79,18 +79,10 @@ def predict(text):
 
             text_seq.append(s1)
         #print(text_seq)
-        #encoded_docs.append(text_seq[0])
-        max_length = 10
+        max_length = 50
         padded_docs = pad_sequences(text_seq, maxlen=max_length, padding='post')
 
 
-        vocab_size = len(t.word_index) + 1
-        # integer encode the documents
-        # encoded_docs = t.texts_to_sequences(text)
-        # print(encoded_docs)
-        # pad documents to a max length of 4 words
-        # max_length = 4
-        # padded_docs = pad_sequences(encoded_docs, maxlen=max_length, padding='post')
         pred = model.predict(padded_docs)
 
         print(pred)
@@ -99,7 +91,7 @@ def predict(text):
         for doc in pred:
             out.append(doc.tolist().index(max(doc.tolist())))
         print(out)
-        data_train = pd.read_csv('/home/abin/PycharmProjects/ICFOSS/data/querydata_to_be_suggested.tsv', sep='\t')
+        data_train = pd.read_csv('data/querydata_to_be_suggested.tsv', sep='\t')
         return (data_train.loc[data_train['sentiment'] == out[0]]['review']).values.tolist()[0]
     else:
         return [""]
