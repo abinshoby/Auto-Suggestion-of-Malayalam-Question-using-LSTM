@@ -3,7 +3,7 @@ It can be  used to predict one of the  question from dataset that have same mean
 This can be used to integrate with chatbot.
 LSTM RNN is used for this purpose and an embedding layer is created.
 
-REQUIREMENTS:
+***REQUIREMENTS:***
 1.Malayalam word vector
 2.Labelled questions dataset.
 3.Flask package
