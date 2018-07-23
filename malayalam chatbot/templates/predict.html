@@ -25,7 +25,7 @@
  </script>
  <script>
      $(function() {
-    $('#inp').on('input',function(e) {
+    $('#sub').on('click',function(e) {
         $('body').trigger('click');
         e.preventDefault();
 
@@ -36,6 +36,8 @@
             url: '/req',
             data: $('form').serialize(),
             type: 'POST',
+
+
             success: function(response) {
             var out=$.parseJSON(response);
                 console.log(out.suggestion);
@@ -55,15 +57,29 @@
 });
 
  </script>
+ <style>
+     .button:hover {
+
+    color: white;
+     box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 8px 25px 0 rgba(0,0,0,0.19);
+     cursor: pointer;
+}
+
+
+.oot:hover{
+box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 8px 25px 0 rgba(0,0,0,0.19);
+cursor: pointer;
+}
+ </style>
 
      <div class="container" align="center">
 
          <form  action="/" method="post" role="form">
              <h2 style="color:#659ba0;">Auto Suggestion </h2>
              <input id="inp" name="inp" align="center"style="width:500px ;height:30px;" class="form-control" autocomplete="off" placeholder="Your Question here" required autofocus>
+            <button id="sub" class="button" style="background:#dde0db;border: 2px solid #d4dbdb;border-radius: 7px;width:45px;height:40px;outline:none;">find</button>
 
-
-<div  id="out" align="center" style="background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;"></div>
+<div  class='oot' id="out" align="center" style="background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;"></div>
 
 <img src=" /static/ll.gif" style=" height:6%;width:6%;" id="load">
          </form>
