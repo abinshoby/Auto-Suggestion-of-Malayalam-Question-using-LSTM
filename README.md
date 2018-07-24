@@ -10,7 +10,7 @@ LSTM RNN is used for this purpose and an embedding layer is created.
 4.Keras package
 5.NLTK package
 
-***Performance:***
+***PERFORMANCE:***
 The dataset consists of 74 labelled  tourism questions in malayalam language.80% of the dataset was used for training and rest for validation. The training accuracy was about 90% and validation accuracy was about 53.33%.The performance graph is shown below.
 <p align="center">
   <img width="460" height="300" src="https://github.com/abinshoby/ChatBot-query-suggestion-malayalam/blob/master/malayalam%20chatbot/epoch50.png">
