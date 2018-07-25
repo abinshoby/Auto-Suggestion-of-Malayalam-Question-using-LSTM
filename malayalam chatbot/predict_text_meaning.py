@@ -48,9 +48,9 @@ def predict(text):
             for w in sent:
                 if w in word_map.keys():
                     s1.append(word_map[w])
-                else:
-                    #max1=max1+1
-                    s1.append(0)
+                # else:
+                #     #max1=max1+1
+                #     s1.append(0)
 
             text_seq.append(s1)
         #print(text_seq)
