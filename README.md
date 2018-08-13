@@ -12,6 +12,7 @@ LSTM RNN is used for this purpose and an embedding layer is created.
 
 ***IMPLEMENTATION DETAILS***
 steps in training
+-----------------
 1.The sentences taken from the dataset is tokenized and assigned a unique sequence.
 2.The sequence is stored in a file word_map.json
 3.An Embedding matrix is created for each of the word
@@ -21,6 +22,7 @@ steps in training
 7.The model is trained using adam optimizer and categorical cross entropy loss function.
 8.The output model is saved as model.json and weights as model.h5
 steps in prediction
+--------------------
 1.The unique sequence of words are loaded from word_map.json and it is assigned to each word in the input sentence.
 2.The model and weights are loaded.
 3.The sequence input is passed to model for prediction.
