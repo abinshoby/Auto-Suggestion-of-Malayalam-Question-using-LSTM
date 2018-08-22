@@ -1,4 +1,4 @@
-# ChatBot-query-suggestion-malayalam
+# Automated-Question-Prediction-in-Malayalam-using-LSTM
 It can be  used to predict one of the  question from dataset that have same meaning as the input.
 This can be used to integrate with chatbot.
 LSTM RNN is used for this purpose and an embedding layer is created.
