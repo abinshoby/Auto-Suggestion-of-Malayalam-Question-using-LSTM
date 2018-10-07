@@ -1,91 +1,119 @@
 <!DOCTYPE html>
- <html lang="en">
+<html lang="en">
 
- <head>
-     <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <meta name="description" content="">
-     <meta name="author" content="">
-     <link rel="icon" href="../../favicon.ico">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-     <title>Auto Suggestion </title>
+    <title>Auto Prediction of Malayalam questions using LSTM </title>
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href="/static/CinzelDecorative-Black.ttf" rel="stylesheet">
 
+</head>
 
-     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
- </head>
-
- <body>
- <script>
-     $(document).ready(function(){
- $('#load').hide();
- });
- </script>
- <script>
-     $(function() {
-    $('#sub').on('click',function(e) {
-        $('body').trigger('click');
-        e.preventDefault();
-
-        $('#load').show();
-
-
-        $.ajax({
-            url: '/req',
-            data: $('form').serialize(),
-            type: 'POST',
-
-
-            success: function(response) {
-            var out=$.parseJSON(response);
-                console.log(out.suggestion);
-                if(out.suggestion.length!=0)
-                document.getElementById('out').innerHTML = 'suggested:'+out.suggestion;
-
-                $('#load').hide();
-
-            },
-            error: function(error) {
-                console.log(error);
-                $('#load').hide();
-
-            }
+<body background="static/background.svg">
+    <script>
+        $(document).ready(function() {
+            $('.cover-body').hide();
         });
-    });
-});
+    </script>
+    <script>
+        $(function() {
+            $('#sub').on('click', function(e) {
+                $('body').trigger('click');
+                e.preventDefault();
 
- </script>
- <style>
-     .button:hover {
+                $('.cover-body').show();
 
-    color: white;
-     box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 8px 25px 0 rgba(0,0,0,0.19);
-     cursor: pointer;
-}
+                $.ajax({
+                    url: '/req',
+                    data: $('form').serialize(),
+                    type: 'POST',
 
+                    success: function(response) {
 
-.oot:hover{
-box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24), 0 8px 25px 0 rgba(0,0,0,0.19);
-cursor: pointer;
-}
- </style>
+                        var out = $.parseJSON(response);
+                        console.log(out.suggestion);
+                        if (out.suggestion.length != 0)
+                            document.getElementById('out').innerHTML = 'suggested:' + out.suggestion;
+                        $('#out').show();
+                        $('.cover-body').hide();
 
-     <div class="container" align="center">
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        $('#load').hide();
 
-         <form  action="/" method="post" role="form">
-             <h2 style="color:#659ba0;">Auto Suggestion </h2>
-             <input id="inp" name="inp" align="center"style="width:500px ;height:30px;" class="form-control" autocomplete="off" placeholder="Your Question here" required autofocus>
-            <button id="sub" class="button" style="background:#dde0db;border: 2px solid #d4dbdb;border-radius: 7px;width:45px;height:40px;outline:none;">find</button>
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        .oot:hover {
+            box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.24), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
+            cursor: pointer;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+        }
+        .input-container{
+                display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
+        }
+        .cover-body{
+            position: fixed;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            background: rgba(200,200,200,0.7);
+            z-index: 10;
+        }
+        .img-div{}
+    </style>
 
-<div  class='oot' id="out" align="center" style="background:#dde0db;width:25%;height:20%;border: 2px solid #d4dbdb;border-radius: 7px;"></div>
+    <div class="container" align="center">
+        <div class="cover-body">
+            <div class="img-div">
+                <img src=" /static/naLBK.gif" style="position: absolute;left:50%;top:50%;transform: translate(-50%,-50%);height: 100px;" id="load">
+            </div>
+        </div>
+        <form action="/" method="post" role="form" style="position: absolute;width: 500px;left: 50%;top: 50%;transform: translate(-50%,-50%);">
+            <h1 style="color:#ffffff;font-family: 'Cinzel Decorative', cursive;display: block;">Auto-prediction of Malayalam Questions using LSTM </h1>
+            <div class="input-container">
+                <input id="inp" name="inp" align="center" style="padding-left: 10px;
+    border-radius: 3px;
+    border: 1px solid #f3f3f3;
+    padding-right: 95px;
+    padding-top: 10px;
+    padding-bottom: 10px;" class="form-control" autocomplete="off" placeholder="Your Question here" required autofocus>
+                <!--<button id="sub1" class="button" style="background:#dde0db;border: 2px solid #d4dbdb;border-radius: 7px;width:45px;height:40px;outline:none;">find</button>-->
+                <input id="sub" class='button' type="image" style="background: transparent;
+    padding: 5px;
+    position: absolute;
+    right: 16px;
+    transform: scale(0.8) rotate(180deg);" src="static/go.png" width=25>
+            </div>
 
-<img src=" /static/ll.gif" style=" height:6%;width:6%;" id="load">
-         </form>
+            <div class='oot' id="out" align="center" style="margin-top:10px;background:#dde0db;width:100%;height:auto;border: 1px solid #d4dbdb;border-radius: 2px;padding-top: 5px;padding-bottom: 5px;"></div>
+            
+        </form>
+        <script>
+            $(document).ready(function() {
+                $("#out").hide()
+            })
+        </script>
+    </div>
 
-     </div>
+</body>
 
- </body>
-
- </html>
+</html>
